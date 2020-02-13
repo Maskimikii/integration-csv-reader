@@ -180,34 +180,4 @@ public class InvoiceInitialCSV {
     public void setInvoiceLines(List<InvoiceLineDTO> invoiceLines) {
         this.invoiceLines = invoiceLines;
     }
-//
-//    @Override
-//    public String toString() {
-//        return "InvoiceInitialCSV{" +
-//                "invoiceId='" + invoiceId + '\'' +
-//                ", customerId='" + customerId + '\'' +
-//                ", invoiceNumber='" + invoiceNumber + '\'' +
-//                ", dateCreated='" + dateCreated + '\'' +
-//                ", dateUpdated='" + dateUpdated + '\'' +
-//                ", dueDate='" + dueDate + '\'' +
-//                ", terms='" + terms + '\'' +
-//                ", poNumber='" + poNumber + '\'' +
-//                ", amount='" + amount + '\'' +
-//                ", paid='" + paid + '\'' +
-//                ", currency='" + currency + '\'' +
-//                ", exchangeRate='" + exchangeRate + '\'' +
-//                ", discount='" + discount + '\'' +
-//                ", taxTotal='" + taxTotal + '\'' +
-//                ", notes='" + notes + '\'' +
-//                ", billingCompanyName='" + billingCompanyName + '\'' +
-//                ", billingEmail='" + billingEmail + '\'' +
-//                ", billingPhone='" + billingPhone + '\'' +
-//                ", billingAddress1='" + billingAddress1 + '\'' +
-//                ", billingAddress2='" + billingAddress2 + '\'' +
-//                ", billingCity='" + billingCity + '\'' +
-//                ", billingState='" + billingState + '\'' +
-//                ", billingZip='" + billingZip + '\'' +
-//                ", invoiceLines=" + invoiceLines +
-//                '}';
-//    }
 }
