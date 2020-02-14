@@ -1,17 +1,11 @@
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import entity.*;
-import org.json.JSONException;
-import org.json.JSONObject;
+import entity.InvoiceDTO;
+import entity.InvoiceInitialCSV;
+import entity.InvoiceLineDTO;
 import util.CsvReaderUtil;
 import util.PostSender;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 
 public class ApplicationRunner {
@@ -24,17 +18,33 @@ public class ApplicationRunner {
         List<InvoiceInitialCSV> invoiceList = CsvReaderUtil.getInvoiceFromCsv();
         List<InvoiceLineDTO> invoiceLinesList = CsvReaderUtil.getInvoiceLinesFromCsv();
         invoiceList = mergeInvoiceAndInvoiceLines(invoiceList, invoiceLinesList);
-
         List<InvoiceDTO> invDtoListToSend = new LinkedList<>();
 
-        invoiceList.forEach(inv -> invDtoListToSend.add(transformToInvoiceDTOView(inv)));
+        System.out.println(invoiceList.size());
 
-        try {
-            PostSender.sendPostRequest(new ObjectMapper().writeValueAsString(invDtoListToSend));
-        } catch (IOException e) {
-            e.printStackTrace();
-
+        int count = 0;
+        for (int i = 0; i < invoiceList.size(); i++) {
+            invDtoListToSend.add(transformToInvoiceDTOView(invoiceList.get(1)));
+            count++;
+            if (count == 1000 || i == invoiceList.size() - 1) {
+                count = 0;
+                try {
+                    PostSender.sendPostRequest(new ObjectMapper().writeValueAsString(invDtoListToSend));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
         }
+
+//        invoiceList.forEach(inv -> invDtoListToSend.add(transformToInvoiceDTOView(inv)));
+//
+//        try {
+//            PostSender.sendPostRequest(new ObjectMapper().writeValueAsString(invDtoListToSend));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//
+//        }
     }
 
     private InvoiceDTO transformToInvoiceDTOView(InvoiceInitialCSV invoiceInitialCSV) {

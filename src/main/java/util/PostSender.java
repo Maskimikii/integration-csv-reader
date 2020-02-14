@@ -27,7 +27,6 @@ public class PostSender {
         postRequest.setEntity(stringEntity);
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        System.out.println("Sending data ... - " + Thread.currentThread().getName());
         CloseableHttpResponse response = httpClient.execute(postRequest);
 
         System.out.println(response.getStatusLine().getStatusCode());
