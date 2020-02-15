@@ -15,36 +15,19 @@ public class ApplicationRunner {
     }
 
     private void run() {
+        List<InvoiceDTO> invDtoListToSend = new LinkedList<>();
+
         List<InvoiceInitialCSV> invoiceList = CsvReaderUtil.getInvoiceFromCsv();
         List<InvoiceLineDTO> invoiceLinesList = CsvReaderUtil.getInvoiceLinesFromCsv();
         invoiceList = mergeInvoiceAndInvoiceLines(invoiceList, invoiceLinesList);
-        List<InvoiceDTO> invDtoListToSend = new LinkedList<>();
+        invoiceList.forEach(inv -> invDtoListToSend.add(transformToInvoiceDTOView(inv)));
 
-        System.out.println(invoiceList.size());
+        try {
+            PostSender.sendPostRequest(new ObjectMapper().writeValueAsString(invDtoListToSend));
+        } catch (IOException e) {
+            e.printStackTrace();
 
-        int count = 0;
-        for (int i = 0; i < invoiceList.size(); i++) {
-            invDtoListToSend.add(transformToInvoiceDTOView(invoiceList.get(1)));
-            count++;
-            if (count == 1000 || i == invoiceList.size() - 1) {
-                count = 0;
-                try {
-                    PostSender.sendPostRequest(new ObjectMapper().writeValueAsString(invDtoListToSend));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-            }
         }
-
-//        invoiceList.forEach(inv -> invDtoListToSend.add(transformToInvoiceDTOView(inv)));
-//
-//        try {
-//            PostSender.sendPostRequest(new ObjectMapper().writeValueAsString(invDtoListToSend));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//
-//        }
     }
 
     private InvoiceDTO transformToInvoiceDTOView(InvoiceInitialCSV invoiceInitialCSV) {
