@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +17,7 @@ public class InvoiceDTO implements Serializable {
     private Double tax;
     private Double paid;
     private Double total;
-    private String internal_id;
+    private String invoiceId;
     private String invoice_number;
     private boolean deleted;
     private String customer_id;
@@ -97,11 +99,11 @@ public class InvoiceDTO implements Serializable {
     }
 
     public String getInternal_id() {
-        return internal_id;
+        return invoiceId;
     }
 
     public void setInternal_id(String internal_id) {
-        this.internal_id = internal_id;
+        this.invoiceId = internal_id;
     }
 
     public String getInvoice_number() {

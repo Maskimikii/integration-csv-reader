@@ -21,12 +21,12 @@ public class ApplicationRunner {
         List<InvoiceLineDTO> invoiceLinesList = CsvReaderUtil.getInvoiceLinesFromCsv();
         invoiceList = mergeInvoiceAndInvoiceLines(invoiceList, invoiceLinesList);
         invoiceList.forEach(inv -> invDtoListToSend.add(transformToInvoiceDTOView(inv)));
-
         try {
+            System.out.println("Prepared " + invDtoListToSend.size() + " records.");
+            System.out.println("Sending records to reciver application...");
             PostSender.sendPostRequest(new ObjectMapper().writeValueAsString(invDtoListToSend));
         } catch (IOException e) {
             e.printStackTrace();
-
         }
     }
 
